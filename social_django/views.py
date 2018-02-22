@@ -31,7 +31,7 @@ def complete(request, backend, *args, **kwargs):
     return do_complete(
         request.backend,
         _do_login,
-        user=request.user,
+        user=None,
         redirect_name=REDIRECT_FIELD_NAME,
         request=request,
         *args,
