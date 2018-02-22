@@ -31,7 +31,7 @@ def auth(request, backend):
 def complete(request, backend, *args, **kwargs):
     """Authentication complete view"""
     kwargs.update(
-        user=request.user,
+        user=None,
         redirect_name=REDIRECT_FIELD_NAME,
         request=request,
     )
