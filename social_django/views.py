@@ -245,7 +245,7 @@ def app_launch(request, backend):
 
 def _complete(request, backend, *args, **kwargs):
     kwargs.update(
-        user=request.user,
+        user=None,  # Avoid AuthAlreadyAssociated errors by ignoring request user
         redirect_name=REDIRECT_FIELD_NAME,
         request=request,
     )

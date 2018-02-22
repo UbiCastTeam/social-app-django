@@ -289,7 +289,6 @@ class TestEmailConfirmation(TestCase):
         self.assertRedirects(response, "/done/", fetch_redirect_response=False)
         self.assertTrue(
             UserSocialAuth.objects.filter(
-                user=user,
                 provider="email",
                 uid="linked@example.com",
             ).exists()
