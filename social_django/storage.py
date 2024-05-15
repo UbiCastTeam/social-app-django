@@ -64,6 +64,11 @@ class DjangoUserMixin(UserMixin):
 
     @classmethod
     def create_user(cls, *args, **kwargs):
+        if kwargs.get('email'):
+            # Special case: recover unassociated users
+            # (association broken by migration or account created by another backend)
+            for user in cls.get_users_by_email(kwargs['email']):
+                return user
         username_field = cls.username_field()
         if "username" in kwargs:
             if username_field not in kwargs:
