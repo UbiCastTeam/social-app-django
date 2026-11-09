@@ -90,7 +90,7 @@ def idp_launch(request, backend):
     # Layer 3: Parameter whitelisting — Verify the 'iss' query parameter against backend ID token issuer(s)
     validated_iss, iss_error = validate_idp_issuer(backend_obj, backend, iss)
     if iss_error:
-        social_logger.error("idp_launch: %s", iss_error)
+        social_logger.warning("idp_launch: %s", iss_error)
         raise BadRequest(iss_error)
 
     # Layer 2: Open redirect prevention — Validate target_link_uri against allowed hosts
@@ -179,14 +179,14 @@ def app_launch(request, backend):
     # Layer 1 & 2: Origin and Referer validation — Verify same-origin Sec-Fetch-Site and allowed Referer
     is_valid_origin, origin_error = validate_app_launch_origin(request)
     if not is_valid_origin:
-        social_logger.error(origin_error)
+        social_logger.warning(origin_error)
         raise BadRequest(origin_error)
 
     backend_obj = request.backend
     configured_issuers, issuer_error = get_backend_issuer(backend_obj, backend)
     if issuer_error or not configured_issuers:
         message = f"app_launch: {issuer_error}"
-        social_logger.error(message)
+        social_logger.warning(message)
         raise BadRequest(message)
 
     # Layer 4: Open redirect prevention — Validate 'next' parameter against allowed hosts
@@ -220,7 +220,7 @@ def app_launch(request, backend):
     if requested_iss:
         validated_iss, iss_err = validate_idp_issuer(backend_obj, backend, requested_iss)
         if iss_err:
-            social_logger.error("app_launch: %s", iss_err)
+            social_logger.warning("app_launch: %s", iss_err)
             raise BadRequest(iss_err)
 
     # Whitelist parameters passed to social:begin

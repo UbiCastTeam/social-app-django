@@ -207,7 +207,7 @@ class SocialAuthExceptionMiddleware:
                     if ErrorTransport.QUERY not in transports:
                         url = self.append_query_params(request, url, message, backend_name, metadata=metadata)
             elif ErrorTransport.QUERY not in transports:
-                social_logger.error(message)
+                social_logger.warning(message)
 
         # 2. Handle Query Parameter transport if enabled
         if ErrorTransport.QUERY in transports:

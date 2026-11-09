@@ -290,7 +290,7 @@ class TestMiddleware(TestCase):
         )
 
     @mock.patch("django.apps.apps.is_installed", return_value=False)
-    @mock.patch("social_django.middleware.social_logger.error")
+    @mock.patch("social_django.middleware.social_logger.warning")
     def test_dispatch_error_messages_without_messages_installed(self, mock_logger, mock_is_installed, mocked):
         """Test dispatch_error logs error when messages app is not installed and query is disabled."""
         rf = RequestFactory()
